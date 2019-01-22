@@ -50,3 +50,4 @@
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Slot/Details.g.cshtml.cs
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Slot/Edit.g.cshtml.cs
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Slot/Index.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Student/Booking.g.cshtml.cs

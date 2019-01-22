@@ -148,5 +148,30 @@ namespace ASRWebApp.Controllers
         {
             return _context.Student.Any(e => e.StudentID == id);
         }
+
+        // GET: Student/Booking
+        public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID)
+        {
+
+            var slot = await _context.Slot.FindAsync(roomID, time);
+
+            if (slot != null)
+            {
+                slot.StudentID = studentID;
+                _context.Slot.Update(slot);
+                await _context.SaveChangesAsync();
+            }
+
+            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
+
+            return View(await asrContext.ToListAsync());
+        }
+
+        private bool SlotExists(string id)
+        {
+            return _context.Slot.Any(e => e.RoomID == id);
+        }
+
     }
+
 }

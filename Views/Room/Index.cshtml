@@ -1,7 +1,9 @@
-@model IEnumerable<ASRWebApp.Models.Room>
+@*@model IEnumerable<ASRWebApp.Models.Room>*@
+
+@model ASRWebApp.Models.MultipleModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List of Rooms";
 }
 
 <h2>Index</h2>
@@ -9,21 +11,67 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Room" asp-action="Index">
+    <p>
+        Date: <input type="date" name="SearchString">
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+@{
+    if(ViewData["FromDate"] != null)
+    {
+        <h2> List of Available Rooms on @(((DateTime)ViewData["FromDate"]).ToShortDateString())</h2>
+    }
+    else
+    {
+        <h2> Pick a date to see available rooms </h2>
+    }
+}
+
+
+
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            <th>
+                @*@Html.DisplayNameFor(model => Model.Rooms)*@
+                RoomID
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RoomID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RoomID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoomID">Delete</a>
-            </td>
-        </tr>
-}
+
+        @{ if (ViewData["FromDate"] != null)
+            {
+                int roomCount = 0;
+                foreach (var room in Model.Rooms)
+                {
+                    foreach (var slot in Model.Slots)
+                    {
+                        if ((DateTime)ViewData["FromDate"] <= slot.StartTime &&
+                            slot.StartTime <= (DateTime)ViewData["ToDate"] &&
+                            room.RoomID == slot.RoomID)
+                        {
+                            roomCount += 1;
+                        }
+
+                    }
+
+                    if (roomCount < 2)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => room.RoomID)
+                            </td>
+                        </tr>
+                    }
+
+                    roomCount = 0;
+                }
+            }
+        }
     </tbody>
 </table>

@@ -1,18 +1,10 @@
-@model IEnumerable<ASRWebApp.Models.Slot>
+﻿@model IEnumerable<ASRWebApp.Models.Slot>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
-
-@{ if (ViewData["Message"] != null)
-    {
-        <div class="alert alert-success" role="alert">
-            @ViewData["Message"]
-        </div>
-    }
-}
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -30,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Student)
             </th>
             <th>
-                Time
+                @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th></th>
         </tr>
@@ -52,11 +44,25 @@
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { roomID = item.Room.RoomID, time = item.StartTime }) |
-                    @Html.ActionLink("Details", "Details", new { roomID = item.Room.RoomID, time = item.StartTime }) |
-                    @Html.ActionLink("Delete", "Delete", new { roomID = item.Room.RoomID, time = item.StartTime })
+                  
+                    @{
+                        if (item.StudentID != null)
+                        {
+                    <button type="button" class="btn btn-danger">
+                        @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                    </button>
+                        }
+                        else
+                        {
+                    <button type="button" class="btn btn-primary">
+                        @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
+                    </button>
 
-                </td>
+                        }
+                     }
+
+
+</td>
             </tr>
         }
     </tbody>

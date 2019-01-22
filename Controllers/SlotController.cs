@@ -18,10 +18,12 @@ namespace ASRWebApp.Controllers
             _context = context;
         }
 
+
         // GET: Slot
         public async Task<IActionResult> Index()
         {
             var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
+
             return View(await asrContext.ToListAsync());
         }
 
@@ -64,9 +66,17 @@ namespace ASRWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(slot);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (CheckMaxSlot(slot.StartTime, slot.StaffID, slot.RoomID) == true)
+                {
+                    _context.Add(slot);
+                    await _context.SaveChangesAsync();
+                    ViewData["Message"] = "A new slot is created!";
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewData["ErrorMessage"] = "Unable to create slot";
+                }
             }
             ViewData["RoomID"] = new SelectList(_context.Room, "RoomID", "RoomID", slot.RoomID);
             ViewData["StaffID"] = new SelectList(_context.Staff, "StaffID", "StaffID", slot.StaffID);
@@ -75,14 +85,14 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Slot/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string roomID, DateTime time)
         {
-            if (id == null)
+            if (roomID == null && time == null)
             {
                 return NotFound();
             }
 
-            var slot = await _context.Slot.FindAsync(id);
+            var slot = await _context.Slot.FindAsync(roomID, time);
             if (slot == null)
             {
                 return NotFound();
@@ -132,9 +142,9 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Slot/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string roomID, DateTime time)
         {
-            if (id == null)
+            if (roomID == null || time == null)
             {
                 return NotFound();
             }
@@ -143,7 +153,7 @@ namespace ASRWebApp.Controllers
                 .Include(s => s.Room)
                 .Include(s => s.Staff)
                 .Include(s => s.Student)
-                .FirstOrDefaultAsync(m => m.RoomID == id);
+                .FirstOrDefaultAsync(m => m.RoomID == roomID && m.StartTime == time);
             if (slot == null)
             {
                 return NotFound();
@@ -155,17 +165,62 @@ namespace ASRWebApp.Controllers
         // POST: Slot/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var slot = await _context.Slot.FindAsync(id);
-            _context.Slot.Remove(slot);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+        public async Task<IActionResult> DeleteConfirmed(string RoomID, DateTime StartTime)
+        { 
+            var slot = await _context.Slot.FindAsync(RoomID, StartTime);
+
+            if (slot.StudentID == null)
+            {
+                _context.Slot.Remove(slot);
+                await _context.SaveChangesAsync();
+                ViewData["Message"] = "Slot is successfully removed";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Unable to delete slot";
+                slot = await _context.Slot
+                .Include(s => s.Room)
+                .Include(s => s.Staff)
+                .Include(s => s.Student)
+                .FirstOrDefaultAsync(m => m.RoomID == RoomID && m.StartTime == StartTime);
+                return View(slot);
+            }
+
         }
 
         private bool SlotExists(string id)
         {
             return _context.Slot.Any(e => e.RoomID == id);
+        }
+
+        public bool CheckMaxSlot(DateTime date, string StaffID, string RoomID)
+        {
+            int countStaffBookings = 0;
+            int countRoomBookings = 0;
+
+            foreach (var x in _context.Slot)
+            {
+                // THIS DATE DOES NOT START FROM 12:00AM
+                if(date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59) && x.StaffID == StaffID)
+                {
+                    countStaffBookings += 1;
+                }
+
+                if (date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59) && x.RoomID == RoomID)
+                {
+                    countRoomBookings += 1;
+                }
+            }
+
+            if (countStaffBookings < 4 && countRoomBookings < 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

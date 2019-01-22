@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
+using System.Collections;
 
 namespace ASRWebApp.Controllers
 {
+
     public class RoomController : Controller
     {
         private readonly AsrContext _context;
@@ -18,10 +20,33 @@ namespace ASRWebApp.Controllers
             _context = context;
         }
 
+
         // GET: Room
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime searchString)
         {
-            return View(await _context.Room.ToListAsync());
+            // Passing two lists created from two models to the template engine
+            var viewModel = new MultipleModel();
+            viewModel.Slots = await _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student).ToListAsync();
+            viewModel.Rooms = await _context.Room.ToListAsync();
+
+            ViewData["FromDate"] = null;
+            if (searchString != DateTime.MinValue)
+            {
+                //string[] dateParts = SearchString.Split('-');
+                //DateTime FromDate = new
+                        //DateTime(Convert.ToInt32(dateParts[2]),
+                        //Convert.ToInt32(dateParts[1]),
+                        //Convert.ToInt32(dateParts[0]));
+
+                ViewData["FromDate"] = searchString;
+                ViewData["ToDate"] = searchString.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            }
+
+
+
+            //return View(await _context.Room.ToListAsync());
+            return View(viewModel);
         }
 
         // GET: Room/Details/5
