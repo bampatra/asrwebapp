@@ -70,7 +70,7 @@ using ASRWebApp.Models;
             WriteLiteral("\r\n<h2>Index</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(168, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cec28916f7ff4026b0a2ace38323ca94", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2801507bc3ae4157bb282bb5a8fc86dc", async() => {
                 BeginContext(191, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
@@ -92,7 +92,7 @@ using ASRWebApp.Models;
             WriteLiteral("\r\n</p>\r\n\r\n");
             EndContext();
             BeginContext(215, 178, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eaa7693b52d244e3a147264ea85ce5e6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e3cb1bdb5b2c459ca3921e1b20c6e733", async() => {
                 BeginContext(262, 124, true);
                 WriteLiteral("\r\n    <p>\r\n        Date: <input type=\"date\" name=\"SearchString\">\r\n        <input type=\"submit\" value=\"Search\" />\r\n    </p>\r\n");
                 EndContext();

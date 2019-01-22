@@ -194,19 +194,20 @@ namespace ASRWebApp.Controllers
             return _context.Slot.Any(e => e.RoomID == id);
         }
 
-        public bool CheckMaxSlot(DateTime date, string StaffID, string RoomID)
+        private bool CheckMaxSlot(DateTime date, string StaffID, string RoomID)
         {
             int countStaffBookings = 0;
             int countRoomBookings = 0;
 
             foreach (var x in _context.Slot)
             {
-                // THIS DATE DOES NOT START FROM 12:00AM
-                if(date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59) && x.StaffID == StaffID)
+                // Checks if the staff has not made more than 4 bookings in one day
+                if (date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59) && x.StaffID == StaffID)
                 {
                     countStaffBookings += 1;
                 }
 
+                // Checks if the room has not been booked more than 2 times in one day
                 if (date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59) && x.RoomID == RoomID)
                 {
                     countRoomBookings += 1;

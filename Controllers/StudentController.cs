@@ -154,15 +154,30 @@ namespace ASRWebApp.Controllers
         {
 
             var slot = await _context.Slot.FindAsync(roomID, time);
+            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
 
             if (slot != null)
             {
-                slot.StudentID = studentID;
-                _context.Slot.Update(slot);
-                await _context.SaveChangesAsync();
-            }
+                if (CheckMaxBooking(time, studentID, roomID) == true)
+                {
+                    slot.StudentID = studentID;
+                    _context.Slot.Update(slot);
+                    if (studentID != null)
+                    {
+                        ViewData["SuccessMessage"] = "Slot is successfully booked!";
+                    }
+                    else
+                    {
+                        ViewData["SuccessMessage"] = "Your booking has been cancelled";
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    ViewData["ErrorMessage"] = "Unable to book slot";
+                }
 
-            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
+            }
 
             return View(await asrContext.ToListAsync());
         }
@@ -170,6 +185,21 @@ namespace ASRWebApp.Controllers
         private bool SlotExists(string id)
         {
             return _context.Slot.Any(e => e.RoomID == id);
+        }
+
+        private bool CheckMaxBooking(DateTime date, string studentID, string roomID)
+        {
+            int countStudentBookings = 0;
+            foreach (var x in _context.Slot)
+            {
+                if (date.Date <= x.StartTime && x.StartTime <= date.Date.AddHours(23).AddMinutes(59).AddSeconds(59))
+                {
+                    if (x.StudentID == studentID && x.StudentID != null) { countStudentBookings += 1; }
+                }
+            }
+
+            if (countStudentBookings < 1){return true;}
+            else {return false;}
         }
 
     }

@@ -9,6 +9,21 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@{ if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["ErrorMessage"]
+        </div>
+    }
+    if (ViewData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewData["SuccessMessage"]
+        </div>
+    }
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -44,25 +59,25 @@
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
-                  
+
                     @{
                         if (item.StudentID != null)
                         {
-                    <button type="button" class="btn btn-danger">
-                        @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
-                    </button>
+                            <button type="button" class="btn btn-danger">
+                                @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                            </button>
                         }
                         else
                         {
-                    <button type="button" class="btn btn-primary">
-                        @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
-                    </button>
+                            <button type="button" class="btn btn-primary">
+                                @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
+                            </button>
 
                         }
-                     }
+                    }
 
 
-</td>
+                </td>
             </tr>
         }
     </tbody>
