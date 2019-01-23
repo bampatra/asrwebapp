@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using ASRWebApp.Data;
 
 namespace ASRWebApp.Controllers
 {
+    [Authorize(Roles = Constants.StaffRole)]
     public class SlotController : Controller
     {
         private readonly AsrContext _context;
@@ -66,17 +69,19 @@ namespace ASRWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (CheckMaxSlot(slot.StartTime, slot.StaffID, slot.RoomID) == true)
+                if (TimeValidation(slot.StartTime) == true)
                 {
-                    _context.Add(slot);
-                    await _context.SaveChangesAsync();
-                    ViewData["Message"] = "A new slot is created!";
-                    return RedirectToAction(nameof(Index));
+                    if (CheckMaxSlot(slot.StartTime, slot.StaffID, slot.RoomID) == true)
+                    {
+                        _context.Add(slot);
+                        await _context.SaveChangesAsync();
+                        ViewData["Message"] = "A new slot is created!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else { ViewData["ErrorMessage"] = "Unable to create slot. Maximum limit has been reached."; }
                 }
-                else
-                {
-                    ViewData["ErrorMessage"] = "Unable to create slot";
-                }
+                else { ViewData["ErrorMessage"] = "Slot must be booked within working hour (9:00AM - 2:00PM)" +
+                	                                " and at the start of the hour "; }
             }
             ViewData["RoomID"] = new SelectList(_context.Room, "RoomID", "RoomID", slot.RoomID);
             ViewData["StaffID"] = new SelectList(_context.Staff, "StaffID", "StaffID", slot.StaffID);
@@ -221,6 +226,19 @@ namespace ASRWebApp.Controllers
             else
             {
                 return false;
+            }
+        }
+
+        private bool TimeValidation (DateTime time)
+        {
+            if (time.Minute != 0) { return false; }
+            else
+            {
+                if(9 <= time.Hour && time.Hour <= 13)
+                {
+                    return true;
+                }
+                else { return false; }
             }
         }
     }

@@ -150,7 +150,7 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Student/Booking
-        public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID)
+        public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID, DateTime searchTime)
         {
 
             var slot = await _context.Slot.FindAsync(roomID, time);
@@ -176,7 +176,12 @@ namespace ASRWebApp.Controllers
                 {
                     ViewData["ErrorMessage"] = "Unable to book slot";
                 }
+            }
 
+            if (searchTime != DateTime.MinValue)
+            {
+                ViewData["FromDate"] = searchTime;
+                ViewData["ToDate"] = searchTime.AddHours(23).AddMinutes(59).AddSeconds(59);
             }
 
             return View(await asrContext.ToListAsync());

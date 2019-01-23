@@ -19,22 +19,34 @@ namespace ASRWebApp
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
-            //    try
-            //    {
-            //        var context = services.GetRequiredService<AsrContext>();
-            //        context.Database.Migrate();
-            //        SeedData.Initialize(services);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var logger = services.GetRequiredService<ILogger<Program>>();
-            //        logger.LogError(ex, "An error occurred seeding the DB.");
-            //    }
-            //}
+                //try
+                //{
+                //    var context = services.GetRequiredService<AsrContext>();
+                //    context.Database.Migrate();
+                //    SeedData.Initialize(services);
+                //}
+                //catch (Exception ex)
+                //{
+                //    var logger = services.GetRequiredService<ILogger<Program>>();
+                //    logger.LogError(ex, "An error occurred seeding the DB.");
+                //}
+
+                try
+                {
+                    Data.SeedData.Initialise(services).Wait();
+                }
+                catch (Exception ex)
+                {
+                    services.GetRequiredService<ILogger<Program>>().
+                        LogError(ex, "An error occurred while seeding the database.");
+                    throw;
+                }
+
+            }
 
             host.Run();
         }

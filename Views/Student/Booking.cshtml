@@ -10,6 +10,13 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+<form asp-controller="Student" asp-action="Booking">
+    <p>
+        Date: <input type="date" name="searchTime">
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 @{ if (ViewData["ErrorMessage"] != null)
     {
         <div class="alert alert-danger" role="alert">
@@ -23,6 +30,16 @@
         </div>
     }
 }
+
+@{if (ViewData["FromDate"] != null)
+    {
+        <h2>Slots available on @ViewData["FromDate"]</h2>
+    }
+    else{
+        <h2> Select a date to see available slots </h2>
+    }
+
+    }
 
 <table class="table">
     <thead>
@@ -42,43 +59,51 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Room.RoomID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Staff.StaffID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Student.StudentID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-                <td>
+            if (ViewData["FromDate"] != null)
+            {
+                if ((DateTime)ViewData["FromDate"] <= item.StartTime && item.StartTime <= (DateTime)ViewData["ToDate"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Room.RoomID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Staff.StaffID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Student.StudentID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
 
-                    @{
-                        if (item.StudentID != null)
-                        {
-                            <button type="button" class="btn btn-danger">
-                                @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="button" class="btn btn-primary">
-                                @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
-                            </button>
+                            @{
+                                if (item.StudentID != null)
+                                {
+                                    <button type="button" class="btn btn-danger">
+                                        @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary">
+                                        @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
+                                    </button>
 
-                        }
-                    }
+                                }
+                            }
 
 
-                </td>
-            </tr>
+                        </td>
+                    </tr>
+                }
+            }
+
         }
     </tbody>
 </table>

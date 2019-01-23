@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASRWebApp.Models
 {
-    public class AsrContext : DbContext
+    public class AsrContext : IdentityDbContext
     {
         public AsrContext(DbContextOptions<AsrContext> options) : base(options)
         { }
@@ -13,7 +14,11 @@ namespace ASRWebApp.Models
         public DbSet<Student> Student { get; set; }
         public DbSet<Slot> Slot { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
-            modelBuilder.Entity<Slot>().HasKey(x => new { x.RoomID, x.StartTime });
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Slot>().HasKey(x => new { x.RoomID, x.StartTime });
+        }
+
     }
 }

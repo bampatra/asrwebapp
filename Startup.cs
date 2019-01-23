@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASRWebApp
 {
@@ -26,6 +28,12 @@ namespace ASRWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -35,6 +43,19 @@ namespace ASRWebApp
 
             services.AddDbContext<AsrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AsrContext")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireDigit = options.Password.RequireNonAlphanumeric =
+                    options.Password.RequireUppercase = options.Password.RequireLowercase = false;
+            }).AddDefaultUI().AddEntityFrameworkStores<AsrContext>();
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -55,6 +76,9 @@ namespace ASRWebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttps());
+            app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {
