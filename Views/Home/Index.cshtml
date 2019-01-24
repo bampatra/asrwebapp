@@ -1,65 +1,144 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 <br />
 <div class="container" style="background: url('https://stmed.net/sites/default/files/simple-wallpapers-25302-1170568.jpg')">
     <br /> <br /><br /><br />
     <div class="row">
-         <div class="col-md-5 col-sm-offset-1">
-             <div class="panel" style="background-color: transparent; color: white; font-family: optima;">
-                 <img style="width:20%;height:20%;" src="https://uploads-ssl.webflow.com/57c77a2af8cc395247a9ac53/5ba9a23096725bf0643e0a3d_RMIT-Logo-white.png" />
-                 <h2> Appointment Scheduling and Reservation System</h2>
-             </div>
-          </div>
+        <div class="col-md-5 col-sm-offset-1">
+            <div class="panel" style="background-color: transparent; color: white; font-family: optima;">
+                <img style="width:20%;height:20%;" src="https://uploads-ssl.webflow.com/57c77a2af8cc395247a9ac53/5ba9a23096725bf0643e0a3d_RMIT-Logo-white.png" />
+                <h2> Appointment Scheduling and Reservation System</h2>
+            </div>
+        </div>
 
         <div class="col-md-4 col-sm-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-lock"></span> Login
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-3 control-label">
-                                Email
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
-                            </div>
+
+                @{if (!SignInManager.IsSignedIn(User))
+                    {
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-lock"></span> Authentication
                         </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-3 control-label">
-                                Password
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" />
-                                        Remember me
-                                    </label>
+
+                        <div class="panel-body">
+
+                            <div class="modal-body">
+                                <p class="lead text-xs-center" style="font-weight: 500;">You need to be logged-in to use this website</p>
+                                <div class="lead text-xs-center">
+                                    <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Register">Register</a> or
+                                    <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">Login</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group last">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    Sign in
-                                </button>
-                                <button type="reset" class="btn btn-default btn-sm">
-                                    Reset
-                                </button>
+
+                    }
+
+                    else
+                    {
+                        if (User.IsInRole("Staff"))
+                        {
+
+                            <div class="panel-heading">
+                            <span class="glyphicon glyphicon-lock"></span> Staff
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    Not Registred? <a href="http://www.jquery2dotnet.com">Register here</a>
-                </div>
+
+                            <div class="panel-body">
+
+                                <div class="modal-body">
+                                    <p class="lead text-xs-center" style="font-weight: 500;">Hello @UserManager.GetUserName(User)! </p>
+                                    <div class="lead text-xs-center">
+                                        <a class="btn btn-large btn-info" href="/room" style="width: 100%; margin-bottom: 10px">Room Availability</a>
+                                        <a class="btn btn-large btn-info" href="/slot/create" style="width: 100%; margin-bottom: 10px">Create a Slot</a> 
+                                        <a class="btn btn-large btn-info" href="/slot" style="width: 100%; margin-bottom: 10px">My Booking Schedule</a>
+                                        <br />
+                                      <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                                         
+                                          <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary">Profile</a>
+                                          <button type="submit" class="btn btn-danger">Logout</button>
+                                      </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (User.IsInRole("Student"))
+                        {
+                            <div class="panel-heading">
+                            <span class="glyphicon glyphicon-lock"></span> Student
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="modal-body">
+                                    <p class="lead text-xs-center" style="font-weight: 500;">Hello @UserManager.GetUserName(User)! </p>
+                                    <div class="lead text-xs-center">
+                                        <a class="btn btn-large btn-info" href="/student/booking" style="width: 100%; margin-bottom: 10px">Book a Slot</a> 
+                                        <a class="btn btn-large btn-info" href="/student/mybookings" style="width: 100%; margin-bottom: 20px">View My Bookings</a>
+                                        <br />
+                                      <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                                         
+                                          <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary">Profile</a>
+                                          <button type="submit" class="btn btn-danger">Logout</button>
+                                      </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+
+
+
+                @*<div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-3 control-label">
+                                    Email
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-3 control-label">
+                                    Password
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" />
+                                            Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group last">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Sign in
+                                    </button>
+                                    <button type="reset" class="btn btn-default btn-sm">
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        Not Registred? <a href="http://www.jquery2dotnet.com">Register here</a>
+                    </div>*@
             </div>
         </div>
     </div>

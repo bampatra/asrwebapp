@@ -58,6 +58,9 @@ namespace ASRWebApp
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +81,7 @@ namespace ASRWebApp
             app.UseCookiePolicy();
             app.UseRewriter(new RewriteOptions().AddRedirectToHttps());
             app.UseAuthentication();
+            app.UseSession();
 
 
             app.UseMvc(routes =>
@@ -86,6 +90,7 @@ namespace ASRWebApp
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

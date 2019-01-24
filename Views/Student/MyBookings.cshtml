@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ASRWebApp.Models.Slot>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<h2>My Bookings</h2>
+
+@{ if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["ErrorMessage"]
+        </div>
+    }
+    if (ViewData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewData["SuccessMessage"]
+        </div>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @* replace with studentID == session.StudentID *@
+            if (item.StudentID == "s1234567")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Staff.StaffID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.StudentID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+
+
+                        <button type="button" class="btn btn-danger">
+                            @* replace with studentID == session.StudentID *@
+                            @Html.ActionLink("Cancel Booking", "MyBookings", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                        </button>
+
+
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

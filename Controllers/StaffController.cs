@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using ASRWebApp.Data;
 
 namespace ASRWebApp.Controllers
 {
@@ -16,6 +18,13 @@ namespace ASRWebApp.Controllers
         public StaffController(AsrContext context)
         {
             _context = context;
+        }
+
+        // GET: Staff/Home
+        [Authorize(Roles = Constants.StaffRole)]
+        public IActionResult Home()
+        {
+            return View();
         }
 
         // GET: Staff

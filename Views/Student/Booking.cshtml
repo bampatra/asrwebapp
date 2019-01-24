@@ -65,7 +65,9 @@
         {
             if (ViewData["FromDate"] != null)
             {
-                if ((DateTime)ViewData["FromDate"] <= item.StartTime && item.StartTime <= (DateTime)ViewData["ToDate"])
+                if ((DateTime)ViewData["FromDate"] <= item.StartTime 
+                    && item.StartTime <= (DateTime)ViewData["ToDate"] 
+                    && item.StudentID == null)
                 {
                     <tr>
                         <td>

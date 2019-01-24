@@ -8,11 +8,13 @@ using ASRWebApp.Models;
 
 namespace ASRWebApp.Controllers
 {
+
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
             return View();
+
         }
 
         public IActionResult FAQ()

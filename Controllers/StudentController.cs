@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using ASRWebApp.Data;
 
 namespace ASRWebApp.Controllers
 {
+
     public class StudentController : Controller
     {
         private readonly AsrContext _context;
@@ -18,7 +21,15 @@ namespace ASRWebApp.Controllers
             _context = context;
         }
 
+        // GET: Student/Home
+        [Authorize(Roles = Constants.StudentRole)]
+        public IActionResult Home()
+        {
+            return View();
+        }
+
         // GET: Student
+        [Authorize(Roles = Constants.StaffRole)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Student.ToListAsync());
@@ -149,7 +160,24 @@ namespace ASRWebApp.Controllers
             return _context.Student.Any(e => e.StudentID == id);
         }
 
+        // GET: Student/MyBookings
+        [Authorize(Roles = Constants.StudentRole)]
+        public async Task<IActionResult> MyBookings(string roomID, DateTime time, string studentID)
+        {
+            var slot = await _context.Slot.FindAsync(roomID, time);
+            if(slot!= null)
+            {
+                slot.StudentID = studentID;
+                _context.Slot.Update(slot);
+                ViewData["SuccessMessage"] = "Your booking has been cancelled";
+            }
+
+            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
+            return View(await asrContext.ToListAsync());
+        }
+
         // GET: Student/Booking
+        [Authorize(Roles = Constants.StudentRole)]
         public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID, DateTime searchTime)
         {
 
@@ -174,7 +202,7 @@ namespace ASRWebApp.Controllers
                 }
                 else
                 {
-                    ViewData["ErrorMessage"] = "Unable to book slot";
+                    ViewData["ErrorMessage"] = "Unable to book slot. Maximum booking limit has been reached.";
                 }
             }
 

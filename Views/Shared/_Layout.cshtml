@@ -26,15 +26,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ASRWebApp</a>
+                    <a  class="navbar-brand">ASR Web App</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        @*<li><a asp-area="" asp-controller="Staff" asp-action="Home">Staff</a></li>
+                        <li><a asp-area="" asp-controller="Student" asp-action="Home">Student</a></li>*@
                         <li><a asp-area="" asp-controller="Home" asp-action="FAQ">FAQ</a></li>
-                        @*<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                     </ul>
-                    <partial name="_LoginPartial" />
+                    @*<partial name="_LoginPartial" />*@
                 </div>
             </div>
         </nav>

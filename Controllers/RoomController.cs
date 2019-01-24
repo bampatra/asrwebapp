@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
+using ASRWebApp.Data;
 
 namespace ASRWebApp.Controllers
 {
-
+    [Authorize(Roles = Constants.StaffRole)]
     public class RoomController : Controller
     {
         private readonly AsrContext _context;

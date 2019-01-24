@@ -106,3 +106,6 @@
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp(old)/ASRWebApp/obj/Debug/netcoreapp2.1/ASRWebApp.pdb
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp(old)/ASRWebApp/obj/Debug/netcoreapp2.1/ASRWebApp.csproj.CopyComplete
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_LoginPartial.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Student/Home.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Student/MyBookings.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Staff/Home.g.cshtml.cs

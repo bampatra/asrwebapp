@@ -5,5 +5,6 @@ namespace ASRWebApp.Data
     {
         public const string StudentRole = "Student";
         public const string StaffRole = "Staff";
+        public const string AdminRole = "Admin";
     }
 }
