@@ -1,4 +1,9 @@
-﻿@model IEnumerable<ASRWebApp.Models.Slot>
+﻿@*@model IEnumerable<ASRWebApp.Models.Slot>*@
+@model ASRWebApp.Models.SlotAndStaff
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +17,17 @@
 
 <form asp-controller="Student" asp-action="Booking">
     <p>
-        Date: <input type="date" name="searchTime">
+        <label for="date">Date</label><br />
+        <input type="date" name="searchTime">
+
+        <br /><label for="stafform">Staff</label>
+        <select id="staffform" class="form-control" name="staffID" style="width:20%">
+            @foreach (var x in Model.Staffs)
+            {
+                <option value="@x.StaffID">@x.Name</option>
+            }
+        </select>
+        <br />
         <input type="submit" value="Search" />
     </p>
 </form>
@@ -33,41 +48,42 @@
 
 @{if (ViewData["FromDate"] != null)
     {
-        <h2>Slots available on @ViewData["FromDate"]</h2>
+        <h2>Staff @ViewData["StaffID"]'s available slots on @ViewData["FromDate"]</h2>
     }
-    else{
+    else
+    {
         <h2> Select a date to see available slots </h2>
     }
 
-    }
+}
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Room)
+                RoomID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Staff)
+                StaffID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student)
+                StudentID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+                Start Time
             </th>
             <th></th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Slots)
         {
             if (ViewData["FromDate"] != null)
             {
-                if ((DateTime)ViewData["FromDate"] <= item.StartTime 
-                    && item.StartTime <= (DateTime)ViewData["ToDate"] 
-                    && item.StudentID == null)
+                if ((DateTime)ViewData["FromDate"] <= item.StartTime
+                    && item.StartTime <= (DateTime)ViewData["ToDate"]
+                    && item.StudentID == null && item.StaffID == (string)ViewData["StaffID"])
                 {
                     <tr>
                         <td>
@@ -88,13 +104,13 @@
                                 if (item.StudentID != null)
                                 {
                                     <button type="button" class="btn btn-danger">
-                                        @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                                        @Html.ActionLink("Cancel Booking", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime }, new { @style = "color:#ffffff;" })
                                     </button>
                                 }
                                 else
                                 {
                                     <button type="button" class="btn btn-primary">
-                                        @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = "s1234567" }, new { @style = "color:#ffffff;" })
+                                        @Html.ActionLink("Book Slot", "Booking", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = @UserManager.GetUserAsync(User).Result.StudentID }, new { @style = "color:#ffffff;" })
                                     </button>
 
                                 }

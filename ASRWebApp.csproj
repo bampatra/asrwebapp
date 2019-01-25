@@ -24,6 +24,7 @@
     <Compile Remove="Models\AccountViewModels\ForgotPasswordViewModel.cs" />
     <Compile Remove="Models\AccountViewModels\LoginViewModel.cs" />
     <Compile Remove="Models\ManageViewModels\ChangePasswordViewModel.cs" />
+    <Compile Remove="Migrations\20190123023255_InitialCreate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
@@ -33,10 +34,12 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Data\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Account\ConfirmEmail.cshtml" />
     <Content Remove="Views\Account\AccessDenied.cshtml" />
     <Content Remove="Views\Account\ConfirmEmail.cshtml" />
+    <Content Remove="Views\Home\Sitemap.json" />
   </ItemGroup>
 </Project>

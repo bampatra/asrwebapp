@@ -27,7 +27,7 @@ namespace ASRWebApp.Controllers
         public async Task<IActionResult> Index(DateTime searchString)
         {
             // Passing two lists created from two models to the template engine
-            var viewModel = new MultipleModel();
+            var viewModel = new SlotAndRoom();
             viewModel.Slots = await _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student).ToListAsync();
             viewModel.Rooms = await _context.Room.ToListAsync();
 
@@ -44,8 +44,6 @@ namespace ASRWebApp.Controllers
                 ViewData["ToDate"] = searchString.AddHours(23).AddMinutes(59).AddSeconds(59);
 
             }
-
-
 
             //return View(await _context.Room.ToListAsync());
             return View(viewModel);

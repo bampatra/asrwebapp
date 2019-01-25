@@ -52,6 +52,10 @@ namespace ASRWebApp.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("StaffID");
+
+                    b.Property<string>("StudentID");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -66,6 +70,10 @@ namespace ASRWebApp.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StaffID");
+
+                    b.HasIndex("StudentID");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -240,6 +248,17 @@ namespace ASRWebApp.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ASRWebApp.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("ASRWebApp.Models.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffID");
+
+                    b.HasOne("ASRWebApp.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentID");
                 });
 
             modelBuilder.Entity("ASRWebApp.Models.Slot", b =>

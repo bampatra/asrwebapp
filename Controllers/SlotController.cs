@@ -80,8 +80,10 @@ namespace ASRWebApp.Controllers
                     }
                     else { ViewData["ErrorMessage"] = "Unable to create slot. Maximum limit has been reached."; }
                 }
-                else { ViewData["ErrorMessage"] = "Slot must be booked within working hour (9:00AM - 2:00PM)" +
-                	                                " and at the start of the hour "; }
+
+                else { ViewData["ErrorMessage"] = "Slot must be created within working hour (9:00AM - 2:00PM) " +
+                	                              "\n Slot must be created at the start of the hour" +
+                	                              "\n Slot must be booked for future dates"; }
             }
             ViewData["RoomID"] = new SelectList(_context.Room, "RoomID", "RoomID", slot.RoomID);
             ViewData["StaffID"] = new SelectList(_context.Staff, "StaffID", "StaffID", slot.StaffID);
@@ -234,7 +236,7 @@ namespace ASRWebApp.Controllers
             if (time.Minute != 0) { return false; }
             else
             {
-                if(9 <= time.Hour && time.Hour <= 13)
+                if(9 <= time.Hour && time.Hour <= 13 && DateTime.Now < time)
                 {
                     return true;
                 }

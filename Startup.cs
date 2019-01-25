@@ -44,12 +44,12 @@ namespace ASRWebApp
             services.AddDbContext<AsrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AsrContext")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 3;
                 options.Password.RequireDigit = options.Password.RequireNonAlphanumeric =
                     options.Password.RequireUppercase = options.Password.RequireLowercase = false;
-            }).AddDefaultUI().AddEntityFrameworkStores<AsrContext>();
+            }).AddDefaultUI().AddEntityFrameworkStores<AsrContext>().AddDefaultTokenProviders();
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {

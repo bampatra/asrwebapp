@@ -1,4 +1,8 @@
 @model IEnumerable<ASRWebApp.Models.Slot>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -15,8 +19,8 @@
         <div class="alert alert-danger" role="alert">
             @ViewData["ErrorMessage"]
         </div>
-        }
     }
+}
 
 <table class="table">
     <thead>
@@ -39,7 +43,8 @@
     <tbody>
         @foreach (var item in Model)
         {
-            @*if(item.StaffID == session.StaffID)*@
+            if(item.StaffID == @UserManager.GetUserAsync(User).Result.StaffID)
+            {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Room.RoomID)
@@ -54,12 +59,20 @@
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { roomID = item.Room.RoomID, time = item.StartTime }) |
-                    @Html.ActionLink("Details", "Details", new { roomID = item.Room.RoomID, time = item.StartTime }) |
-                    @Html.ActionLink("Delete", "Delete", new { roomID = item.Room.RoomID, time = item.StartTime })
+                    @*@Html.ActionLink("Edit", "Edit", new { roomID = item.Room.RoomID, time = item.StartTime }) |
+                        @Html.ActionLink("Details", "Details", new { roomID = item.Room.RoomID, time = item.StartTime }) |
+                        @Html.ActionLink("Delete", "Delete", new { roomID = item.Room.RoomID, time = item.StartTime })*@
+
+                    @if (item.StudentID == null)
+                    {
+                        <button type="button" class="btn btn-danger">
+                            @Html.ActionLink("Delete Slot", "Delete", new { roomID = item.Room.RoomID, time = item.StartTime }, new { @style = "color:#ffffff;" })
+                        </button>
+                    }
 
                 </td>
             </tr>
+                }
         }
     </tbody>
 </table>

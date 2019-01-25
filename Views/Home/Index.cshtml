@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Home Page";
@@ -45,7 +45,7 @@
                         {
 
                             <div class="panel-heading">
-                            <span class="glyphicon glyphicon-lock"></span> Staff
+                            <span class="glyphicon glyphicon-user"></span> Staff
                             </div>
 
                             <div class="panel-body">
@@ -70,7 +70,7 @@
                         if (User.IsInRole("Student"))
                         {
                             <div class="panel-heading">
-                            <span class="glyphicon glyphicon-lock"></span> Student
+                            <span class="glyphicon glyphicon-user"></span> Student
                             </div>
 
                             <div class="panel-body">

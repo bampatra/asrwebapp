@@ -109,3 +109,9 @@
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Student/Home.g.cshtml.cs
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Student/MyBookings.g.cshtml.cs
 /Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Staff/Home.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Views/Home/Sitemap.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Areas/Identity/Pages/Account/Register.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Areas/Identity/Pages/Account/_ViewImports.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Areas/Identity/Pages/_ValidationScriptsPartial.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Areas/Identity/Pages/_ViewImports.g.cshtml.cs
+/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/obj/Debug/netcoreapp2.1/Razor/Areas/Identity/Pages/_ViewStart.g.cshtml.cs

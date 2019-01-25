@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASRWebApp.Models
 {
-    public class AsrContext : IdentityDbContext
+    public class AsrContext : IdentityDbContext<ApplicationUser>
     {
         public AsrContext(DbContextOptions<AsrContext> options) : base(options)
         { }

@@ -1,4 +1,9 @@
-﻿@model IEnumerable<ASRWebApp.Models.Slot>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<ASRWebApp.Models.Slot>
 
 @{
     ViewData["Title"] = "My Bookings";
@@ -42,8 +47,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            @* replace with studentID == session.StudentID *@
-            if (item.StudentID == "s1234567")
+            if (item.StudentID == @UserManager.GetUserAsync(User).Result.StudentID)
             {
                 <tr>
                     <td>
@@ -62,8 +66,7 @@
 
 
                         <button type="button" class="btn btn-danger">
-                            @* replace with studentID == session.StudentID *@
-                            @Html.ActionLink("Cancel Booking", "MyBookings", new { roomID = item.Room.RoomID, time = item.StartTime, studentID = (string)null }, new { @style = "color:#ffffff;" })
+                            @Html.ActionLink("Cancel Booking", "MyBookings", new { roomID = item.Room.RoomID, time = item.StartTime}, new { @style = "color:#ffffff;" })
                         </button>
 
 

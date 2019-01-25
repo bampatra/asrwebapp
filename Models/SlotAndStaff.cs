@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ASRWebApp.Models
 {
-    public class MultipleModel
+    public class SlotAndStaff
     {
-        // A class to pass two models at the same time
         public IEnumerable<Slot> Slots { get; set; }
-        public IEnumerable<Room> Rooms { get; set; }
+        public IEnumerable<Staff> Staffs { get; set; }
+ 
     }
 }

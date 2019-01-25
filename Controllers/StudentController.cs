@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using ASRWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using ASRWebApp.Data;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace ASRWebApp.Controllers
 {
@@ -165,24 +167,29 @@ namespace ASRWebApp.Controllers
         public async Task<IActionResult> MyBookings(string roomID, DateTime time, string studentID)
         {
             var slot = await _context.Slot.FindAsync(roomID, time);
-            if(slot!= null)
+            var asrContext = await _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student).ToListAsync();
+
+            if (slot!= null)
             {
                 slot.StudentID = studentID;
                 _context.Slot.Update(slot);
+                await _context.SaveChangesAsync();
                 ViewData["SuccessMessage"] = "Your booking has been cancelled";
             }
 
-            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
-            return View(await asrContext.ToListAsync());
+            return View(asrContext);
         }
 
         // GET: Student/Booking
         [Authorize(Roles = Constants.StudentRole)]
-        public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID, DateTime searchTime)
+        public async Task<IActionResult> Booking(string roomID, DateTime time, string studentID, DateTime searchTime, string staffID)
         {
-
+            var viewModel = new SlotAndStaff();
             var slot = await _context.Slot.FindAsync(roomID, time);
-            var asrContext = _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student);
+            var asrContext = await _context.Slot.Include(s => s.Room).Include(s => s.Staff).Include(s => s.Student).ToListAsync();
+
+            viewModel.Slots = asrContext;
+            viewModel.Staffs = await _context.Staff.ToListAsync();
 
             if (slot != null)
             {
@@ -211,15 +218,18 @@ namespace ASRWebApp.Controllers
                 ViewData["FromDate"] = searchTime;
                 ViewData["ToDate"] = searchTime.AddHours(23).AddMinutes(59).AddSeconds(59);
             }
+            ViewData["StaffID"] = staffID;
 
-            return View(await asrContext.ToListAsync());
+            return View(viewModel);
         }
 
+        // Checks if a slot exists or not
         private bool SlotExists(string id)
         {
             return _context.Slot.Any(e => e.RoomID == id);
         }
 
+        // Checks the maximum booking
         private bool CheckMaxBooking(DateTime date, string studentID, string roomID)
         {
             int countStudentBookings = 0;

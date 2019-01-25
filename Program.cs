@@ -37,13 +37,13 @@ namespace ASRWebApp
 
                 try
                 {
-                    Data.SeedData.Initialise(services).Wait();
+                    services.GetRequiredService<AsrContext>().Database.Migrate();
+                    Data.SeedData.InitialiseAsync(services).Wait();
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    services.GetRequiredService<ILogger<Program>>().
-                        LogError(ex, "An error occurred while seeding the database.");
-                    throw;
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "An error occurred seeding the DB.");
                 }
 
             }

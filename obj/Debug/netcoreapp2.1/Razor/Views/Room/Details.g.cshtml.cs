@@ -64,7 +64,7 @@ using ASRWebApp.Models;
             WriteLiteral("\r\n<h2>Details</h2>\r\n\r\n<div>\r\n    <h4>Room</h4>\r\n    <hr />\r\n    <dl class=\"dl-horizontal\">\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(197, 58, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c884c36f5b1848b2aa481eb52c40ecda", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1952c1ce55a34f2eb0602b3a6516f700", async() => {
                 BeginContext(247, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -99,7 +99,7 @@ using ASRWebApp.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(263, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63a0362fa4574af9b5f5b0b9116d69f9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0b8eb6f83fe8422ab4d1dc7e13be4959", async() => {
                 BeginContext(285, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();

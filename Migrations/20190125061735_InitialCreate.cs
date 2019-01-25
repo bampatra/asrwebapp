@@ -23,31 +23,6 @@ namespace ASRWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Room",
                 columns: table => new
                 {
@@ -103,6 +78,77 @@ namespace ASRWebApp.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    StaffID = table.Column<string>(nullable: true),
+                    StudentID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Staff_StaffID",
+                        column: x => x.StaffID,
+                        principalTable: "Staff",
+                        principalColumn: "StaffID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Student_StudentID",
+                        column: x => x.StudentID,
+                        principalTable: "Student",
+                        principalColumn: "StudentID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Slot",
+                columns: table => new
+                {
+                    RoomID = table.Column<string>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    StaffID = table.Column<string>(nullable: false),
+                    StudentID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Slot", x => new { x.RoomID, x.StartTime });
+                    table.ForeignKey(
+                        name: "FK_Slot_Room_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Room",
+                        principalColumn: "RoomID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Slot_Staff_StaffID",
+                        column: x => x.StaffID,
+                        principalTable: "Staff",
+                        principalColumn: "StaffID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Slot_Student_StudentID",
+                        column: x => x.StudentID,
+                        principalTable: "Student",
+                        principalColumn: "StudentID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -190,38 +236,6 @@ namespace ASRWebApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Slot",
-                columns: table => new
-                {
-                    RoomID = table.Column<string>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    StaffID = table.Column<string>(nullable: false),
-                    StudentID = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Slot", x => new { x.RoomID, x.StartTime });
-                    table.ForeignKey(
-                        name: "FK_Slot_Room_RoomID",
-                        column: x => x.RoomID,
-                        principalTable: "Room",
-                        principalColumn: "RoomID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Slot_Staff_StaffID",
-                        column: x => x.StaffID,
-                        principalTable: "Staff",
-                        principalColumn: "StaffID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Slot_Student_StudentID",
-                        column: x => x.StudentID,
-                        principalTable: "Student",
-                        principalColumn: "StudentID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -260,6 +274,16 @@ namespace ASRWebApp.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StaffID",
+                table: "AspNetUsers",
+                column: "StaffID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StudentID",
+                table: "AspNetUsers",
+                column: "StudentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Slot_StaffID",
