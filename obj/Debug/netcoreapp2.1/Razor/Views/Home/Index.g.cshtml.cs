@@ -114,7 +114,7 @@ using Microsoft.AspNetCore.Identity;
                                     ");
             EndContext();
             BeginContext(1510, 85, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4abbf124bb4ae19506edbabd44c762", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3ef18d9743374af7b0f42f327ddbcd34", async() => {
                 BeginContext(1583, 8, true);
                 WriteLiteral("Register");
                 EndContext();
@@ -139,7 +139,7 @@ using Microsoft.AspNetCore.Identity;
             WriteLiteral(" or\r\n                                    ");
             EndContext();
             BeginContext(1636, 82, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c6c4f1a42347476b83c0ac5dac9f2635", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f89e4f5970864ef9b9680446e9f8683b", async() => {
                 BeginContext(1709, 5, true);
                 WriteLiteral("Login");
                 EndContext();
@@ -198,12 +198,12 @@ using Microsoft.AspNetCore.Identity;
                                       ");
             EndContext();
             BeginContext(3029, 503, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f8209fa7efec427b87d7931eb7f493f2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c2a55eabdca44f408b6a075ae59252ec", async() => {
                 BeginContext(3203, 87, true);
                 WriteLiteral("\r\n                                         \r\n                                          ");
                 EndContext();
                 BeginContext(3290, 91, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d39e19a0c6224de9a09088a590674232", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ffe9723c6a274f108188285f540a5b92", async() => {
                     BeginContext(3370, 7, true);
                     WriteLiteral("Profile");
                     EndContext();
@@ -294,12 +294,12 @@ using Microsoft.AspNetCore.Identity;
                                       ");
             EndContext();
             BeginContext(4671, 503, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ba131ca7a9354a9b831b375abcc83124", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "946bb44676f949ebab5f2a00d613204b", async() => {
                 BeginContext(4845, 87, true);
                 WriteLiteral("\r\n                                         \r\n                                          ");
                 EndContext();
                 BeginContext(4932, 91, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52205f3e68ad4413b73fdffb7f359760", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "148e6e5a01f24050b3405ac7c289428f", async() => {
                     BeginContext(5012, 7, true);
                     WriteLiteral("Profile");
                     EndContext();

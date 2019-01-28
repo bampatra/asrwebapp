@@ -35,6 +35,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="Data\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Controllers\API\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Account\ConfirmEmail.cshtml" />

@@ -78,7 +78,7 @@ namespace ASRWebApp.Controllers
                         ViewData["Message"] = "A new slot is created!";
                         return RedirectToAction(nameof(Index));
                     }
-                    else { ViewData["ErrorMessage"] = "Unable to create slot. Maximum limit has been reached."; }
+                    else { ViewData["ErrorMessage"] = "Unable to create slot. Maximum limit has been reached." ; }
                 }
 
                 else { ViewData["ErrorMessage"] = "Slot must be created within working hour (9:00AM - 2:00PM) " +
