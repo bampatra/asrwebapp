@@ -11,6 +11,7 @@ using ASRWebApp.Data;
 
 namespace ASRWebApp.Controllers
 {
+    [Authorize(Roles = Constants.StaffRole)]
     public class StaffController : Controller
     {
         private readonly AsrContext _context;
@@ -21,7 +22,6 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Staff/Home
-        [Authorize(Roles = Constants.StaffRole)]
         public IActionResult Home()
         {
             return View();

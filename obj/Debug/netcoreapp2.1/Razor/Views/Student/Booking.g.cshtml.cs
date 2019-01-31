@@ -79,7 +79,7 @@ using Microsoft.AspNetCore.Identity;
             WriteLiteral("\r\n<h2>Index</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(301, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f8322459330b4273b1d55e50f1fe2b38", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90de14f894184f81bec498627bbb22e8", async() => {
                 BeginContext(324, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
@@ -101,7 +101,7 @@ using Microsoft.AspNetCore.Identity;
             WriteLiteral("\r\n</p>\r\n\r\n");
             EndContext();
             BeginContext(348, 533, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4e75cbb4cb56425caf395ddf560968eb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3497b26ac6f0434287617471df35a56f", async() => {
                 BeginContext(400, 244, true);
                 WriteLiteral("\r\n    <p>\r\n        <label for=\"date\">Date</label><br />\r\n        <input type=\"date\" name=\"searchTime\">\r\n\r\n        <br /><label for=\"stafform\">Staff</label>\r\n        <select id=\"staffform\" class=\"form-control\" name=\"staffID\" style=\"width:20%\">\r\n");
                 EndContext();
@@ -115,7 +115,7 @@ using Microsoft.AspNetCore.Identity;
                 WriteLiteral("                ");
                 EndContext();
                 BeginContext(721, 43, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "79b3c1c7182e4a8baf8a0455f367130f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "718a8e4b64fd4e5f947f22a011f55b5a", async() => {
                     BeginContext(749, 6, false);
 #line 27 "/Users/BramanthaPatra/Documents/Google Drive/Uni/Year 3, Semester 2/WDT/Projects/ASRWebApp/ASRWebApp/Views/Student/Booking.cshtml"
                                       Write(x.Name);

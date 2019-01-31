@@ -38,6 +38,7 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Student/Details/5
+        [Authorize(Roles = Constants.StaffRole)]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -56,6 +57,7 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Student/Create
+        [Authorize(Roles = Constants.StaffRole)]
         public IActionResult Create()
         {
             return View();
@@ -78,6 +80,7 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Student/Edit/5
+        [Authorize(Roles = Constants.StaffRole)]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -129,6 +132,7 @@ namespace ASRWebApp.Controllers
         }
 
         // GET: Student/Delete/5
+        [Authorize(Roles = Constants.StaffRole)]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
